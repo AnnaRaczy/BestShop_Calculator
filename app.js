@@ -10,7 +10,6 @@ const terminal = document.querySelector('#terminal')
 const elements = [productsInput, ordersInput]
 for (const elem of elements) {
     elem.addEventListener('change', onClick)
-    // item.addEventListener('change', onUncheck)
 }
 
 dropdownInput.addEventListener('click', onClickDropdown)
@@ -20,19 +19,15 @@ dropdown = dropdownOptions.children;
 const items = [accounting, terminal]
 for (const item of items) {
     item.addEventListener('change', onCheck)
-    // item.addEventListener('change', onUncheck)
 }
 
 
 function onClick(event) {
 
     const error = validate()
-    console.log(this)
 
     if(error === null) {
-        // const products = productsInput.value
         const item = this.value
-        console.log(this)
 
         const numChild = (this === productsInput) ? 1 : 2
 
@@ -71,7 +66,7 @@ function onChoose() {
     const basicOption = document.querySelector('[data-value = basic]')
     const profOption = document.querySelector('[data-value = professional]')
     const premiumOption = document.querySelector('[data-value = premium]')
-    console.log(this)
+    
 
 
     const div = document.querySelector('.calc__summary .list__item:nth-child(3)')
@@ -131,7 +126,7 @@ function calc() {
     const priceAll = document.querySelectorAll('[data-price]')
     const inputsAll = [...priceAll].map( el => parseFloat(el.dataset.price))
                                    .reduce( (sum, acc) => sum + acc, 0) 
-    console.log(inputsAll)
+    
 
     const summary = document.querySelector('.summary__total')
     const total = document.querySelector('.total__price')
@@ -143,13 +138,18 @@ function validate(event) {
 
     const products = productsInput.value
     const orders = ordersInput.value
+    console.log(orders)
 
-    for( const item in [products, orders]) {
-        function isNatural(item){
-            var intNum = parseInt(item);
-            var floatNum = parseFloat(item);
-            return (intNum == floatNum) && intNum >=0;
-        }
+    if(products < 0 || orders < 0) {
+        alert('Must be a positive number')
+    }
+
+    else if(products % 1 !== 0 || orders % 1 !== 0){
+        alert('Not an integer')
+    }
+    else {
         return null
     }
+        
+   
 }
